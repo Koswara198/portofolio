@@ -1,0 +1,402 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const projects = [
+  {
+    title: "Analisis Sentimen UNIKOM",
+    desc: "Klasifikasi sentimen ulasan kampus menggunakan metode Support Vector Machine (SVM) — Tugas Akhir S1.",
+    tags: ["Python", "SVM", "NLP"],
+    status: "done",
+    github: "https://github.com/koswara198"
+  },
+  {
+    title: "Project Web Laravel",
+    desc: "Aplikasi web fullstack menggunakan framework Laravel dengan autentikasi dan manajemen database MySQL.",
+    tags: ["Laravel", "PHP", "MySQL"],
+    status: "wip",
+    github: "#"
+  },
+  {
+    title: "Inventory Management",
+    desc: "Sistem pencatatan dan pengelolaan stok barang berbasis web dengan dashboard monitoring.",
+    tags: ["JavaScript", "PHP", "MySQL"],
+    status: "wip",
+    github: "#"
+  },
+  {
+    title: "Data Analysis Project",
+    desc: "Eksplorasi dan visualisasi data menggunakan Python untuk menghasilkan insight yang actionable.",
+    tags: ["Python", "Pandas", "Matplotlib"],
+    status: "wip",
+    github: "#"
+  }
+];
+
+const skills = {
+  "Languages & Frameworks": ["Python", "PHP", "JavaScript", "Laravel", "MySQL"],
+  "Data & AI": ["Machine Learning", "SVM", "NLP", "Data Science", "Pandas"],
+  "Tools": ["Git", "VS Code", "Linux", "Microsoft Office"],
+  "Soft Skills": ["Problem Solving", "Detail-Oriented", "Teamwork", "Fast Learner"]
+};
+
+const experience = [
+  {
+    role: "Admin Gudang",
+    company: "Novari Shoes",
+    date: "Apr 2025 – Present",
+    desc: "Pengecekan kualitas & kelengkapan barang sebelum pengiriman, manajemen inventaris, serta koordinasi dengan tim produksi dan logistik."
+  },
+  {
+    role: "IT Support Intern",
+    company: "Infomedia Nusantara",
+    date: "Sep 2023",
+    desc: "Troubleshooting hardware, konfigurasi software & sistem operasi, serta dukungan teknis untuk tim call center."
+  }
+];
+
+const certs = [
+  { name: "CCNA: Introduction to Networks", org: "Cisco" },
+  { name: "CCNA: Switching, Routing & Wireless Essentials", org: "Cisco" },
+  { name: "Associate Data Science", org: "BNSP" },
+  { name: "TOEFL Score 477", org: "ETS" }
+];
+---
+
+<Layout>
+  <style>
+    :root {
+      --bg:      #0c0c0e;
+      --surface: #131316;
+      --line:    #222226;
+      --text:    #e8e8ec;
+      --sub:     #888892;
+      --hint:    #44444c;
+      --accent:  #7b6ef6;
+      --mono:    'JetBrains Mono', monospace;
+    }
+
+    /* ─ BASE ─ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: rgba(123,110,246,.25); }
+
+    /* ─ NAV ─ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 99;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      background: rgba(12,12,14,.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .logo {
+      font-family: var(--mono); font-size: 13px;
+      color: var(--sub); letter-spacing: .5px;
+    }
+    .logo b { color: var(--text); font-weight: 500; }
+    .nav-links { display: flex; gap: 1.75rem; }
+    .nav-links a {
+      font-size: 13px; color: var(--sub);
+      transition: color .15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ─ LAYOUT ─ */
+    .page { max-width: 780px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ─ HERO ─ */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding-top: 56px;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      opacity: 0; animation: up .5s .05s forwards;
+    }
+    .hero h1 {
+      font-size: clamp(2.6rem, 6vw, 4rem);
+      font-weight: 700; letter-spacing: -1.5px; line-height: 1.05;
+      margin-bottom: 1.25rem;
+      opacity: 0; animation: up .5s .15s forwards;
+    }
+    .hero h1 em { font-style: normal; color: var(--sub); }
+    .hero-bio {
+      font-size: .975rem; color: var(--sub); max-width: 480px;
+      line-height: 1.75; margin-bottom: 2rem;
+      opacity: 0; animation: up .5s .25s forwards;
+    }
+    .hero-actions {
+      display: flex; gap: .75rem; flex-wrap: wrap;
+      opacity: 0; animation: up .5s .35s forwards;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: .6rem 1.25rem; border-radius: 6px;
+      font-size: 13px; font-weight: 500; transition: all .2s;
+    }
+    .btn-fill { background: var(--accent); color: #fff; }
+    .btn-fill:hover { opacity: .85; }
+    .btn-ghost {
+      border: 1px solid var(--line); color: var(--sub);
+    }
+    .btn-ghost:hover { border-color: var(--hint); color: var(--text); }
+
+    .hero-meta {
+      display: flex; gap: 2.5rem; margin-top: 3.5rem;
+      padding-top: 2rem; border-top: 1px solid var(--line);
+      opacity: 0; animation: up .5s .45s forwards;
+    }
+    .meta-val { font-size: 1.6rem; font-weight: 700; color: var(--text); line-height: 1; }
+    .meta-key { font-family: var(--mono); font-size: 10px; color: var(--hint); margin-top: 5px; }
+
+    /* ─ SECTION ─ */
+    .section { padding: 4.5rem 0; border-top: 1px solid var(--line); }
+    .section-title {
+      font-family: var(--mono); font-size: 10px; text-transform: uppercase;
+      letter-spacing: 2px; color: var(--hint);
+      margin-bottom: 2rem;
+    }
+
+    /* ─ SKILLS ─ */
+    .skill-row { display: flex; flex-direction: column; gap: 1rem; }
+    .skill-group { display: flex; gap: 1rem; align-items: baseline; flex-wrap: wrap; }
+    .skill-group-name {
+      font-family: var(--mono); font-size: 11px; color: var(--hint);
+      min-width: 160px; flex-shrink: 0;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 12px; padding: 3px 10px; border-radius: 4px;
+      background: var(--surface); color: var(--sub);
+      border: 1px solid var(--line);
+    }
+
+    /* ─ PROJECTS ─ */
+    .proj-list { display: flex; flex-direction: column; }
+    .proj-item {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 1.5rem; padding: 1.25rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .proj-item:first-child { border-top: 1px solid var(--line); }
+    .proj-body { flex: 1; }
+    .proj-header { display: flex; align-items: center; gap: .75rem; margin-bottom: .4rem; }
+    .proj-name { font-size: .95rem; font-weight: 600; }
+    .badge {
+      font-family: var(--mono); font-size: 10px;
+      padding: 2px 7px; border-radius: 4px;
+    }
+    .badge-done { background: rgba(52,211,153,.1); color: #34d399; border: 1px solid rgba(52,211,153,.2); }
+    .badge-wip  { background: rgba(251,191,36,.08); color: #d4a22a; border: 1px solid rgba(251,191,36,.15); }
+    .proj-desc { font-size: 13px; color: var(--sub); line-height: 1.65; margin-bottom: .75rem; }
+    .proj-side { display: flex; flex-direction: column; align-items: flex-end; gap: .5rem; flex-shrink: 0; padding-top: 2px; }
+    .proj-link {
+      font-family: var(--mono); font-size: 11px; color: var(--hint);
+      transition: color .15s;
+    }
+    .proj-link:hover { color: var(--accent); }
+
+    /* ─ TIMELINE ─ */
+    .timeline { display: flex; flex-direction: column; gap: 1.5rem; }
+    .tl-item { display: grid; grid-template-columns: 140px 1fr; gap: 1rem; }
+    .tl-date { font-family: var(--mono); font-size: 11px; color: var(--hint); padding-top: 2px; }
+    .tl-title { font-size: .95rem; font-weight: 600; margin-bottom: 2px; }
+    .tl-sub { font-size: 13px; color: var(--accent); margin-bottom: .4rem; }
+    .tl-desc { font-size: 13px; color: var(--sub); line-height: 1.65; }
+
+    /* ─ CERTS ─ */
+    .cert-list { display: flex; flex-direction: column; gap: .75rem; }
+    .cert-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .85rem 1rem; border-radius: 6px;
+      background: var(--surface); border: 1px solid var(--line);
+    }
+    .cert-name { font-size: 13px; font-weight: 500; }
+    .cert-org { font-family: var(--mono); font-size: 11px; color: var(--hint); }
+
+    /* ─ CONTACT ─ */
+    .contact-block { padding: 2rem 0 1rem; }
+    .contact-block p { font-size: .975rem; color: var(--sub); max-width: 420px; margin-bottom: 1.5rem; line-height: 1.7; }
+    .contact-row { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+    /* ─ FOOTER ─ */
+    footer {
+      padding: 2rem 1.5rem; text-align: center;
+      font-family: var(--mono); font-size: 11px; color: var(--hint);
+      border-top: 1px solid var(--line);
+    }
+
+    /* ─ ANIMATION ─ */
+    @keyframes up {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─ RESPONSIVE ─ */
+    @media (max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .nav-links { gap: 1.25rem; }
+      .hero-meta { gap: 1.5rem; }
+      .tl-item { grid-template-columns: 1fr; gap: .25rem; }
+      .proj-item { flex-direction: column; gap: .75rem; }
+      .proj-side { flex-direction: row; align-items: center; }
+    }
+  </style>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo"><b>Adi Tata Koswara</b></div>
+    <div class="nav-links">
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="page">
+    <div class="hero">
+      <div class="hero-eyebrow">Available for opportunities</div>
+      <h1>Informatics Graduate<br><em>& Developer</em></h1>
+      <p class="hero-bio">
+        Lulusan S1 Teknik Informatika UNIKOM dengan minat di data science, AI, dan web development.
+        Berpengalaman di IT Support dan operasional — siap bertumbuh di industri tech.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-fill">View Projects</a>
+        <a href="https://github.com/koswara198" target="_blank" rel="noopener" class="btn btn-ghost">GitHub</a>
+        <a href="mailto:Aditatakoswara85@gmail.com" class="btn btn-ghost">Email Me</a>
+      </div>
+      <div class="hero-meta">
+        <div><div class="meta-val">3.48</div><div class="meta-key">GPA / UNIKOM</div></div>
+        <div><div class="meta-val">4</div><div class="meta-key">Certifications</div></div>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <section class="section" id="skills">
+      <div class="section-title">Skills</div>
+      <div class="skill-row">
+        {Object.entries(skills).map(([group, items]) => (
+          <div class="skill-group">
+            <div class="skill-group-name">{group}</div>
+            <div class="tags">
+              {items.map(s => <span class="tag">{s}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section" id="projects">
+      <div class="section-title">Projects</div>
+      <div class="proj-list">
+        {projects.map(p => (
+          <div class="proj-item">
+            <div class="proj-body">
+              <div class="proj-header">
+                <span class="proj-name">{p.title}</span>
+                <span class={`badge ${p.status === 'done' ? 'badge-done' : 'badge-wip'}`}>
+                  {p.status === 'done' ? 'Completed' : 'In Progress'}
+                </span>
+              </div>
+              <p class="proj-desc">{p.desc}</p>
+              <div class="tags">
+                {p.tags.map(t => <span class="tag">{t}</span>)}
+              </div>
+            </div>
+            <div class="proj-side">
+              {p.github !== '#'
+                ? <a href={p.github} target="_blank" rel="noopener" class="proj-link">View →</a>
+                : <span class="proj-link" style="cursor:default">—</span>
+              }
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="section" id="experience">
+      <div class="section-title">Experience</div>
+      <div class="timeline">
+        {experience.map(e => (
+          <div class="tl-item">
+            <div class="tl-date">{e.date}</div>
+            <div>
+              <div class="tl-title">{e.role}</div>
+              <div class="tl-sub">{e.company}</div>
+              <div class="tl-desc">{e.desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section class="section" id="education">
+      <div class="section-title">Education</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">2020 – 2025</div>
+          <div>
+            <div class="tl-title">S1 Teknik Informatika</div>
+            <div class="tl-sub">Universitas Komputer Indonesia (UNIKOM)</div>
+            <div class="tl-desc">IPK 3.48 / 4.0 · Tugas Akhir: Analisis Sentimen Ulasan Kampus menggunakan Support Vector Machine.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2017 – 2020</div>
+          <div>
+            <div class="tl-title">SMA Negeri 1 Tamansari</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section class="section" id="certs">
+      <div class="section-title">Certifications</div>
+      <div class="cert-list">
+        {certs.map(c => (
+          <div class="cert-item">
+            <span class="cert-name">{c.name}</span>
+            <span class="cert-org">{c.org}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="section-title">Contact</div>
+      <div class="contact-block">
+        <p>Terbuka untuk peluang kerja, kolaborasi project, atau sekadar diskusi tech.</p>
+        <div class="contact-row">
+          <a href="mailto:Aditatakoswara85@gmail.com" class="btn btn-fill">Send Email</a>
+          <a href="https://wa.me/62895613405069" target="_blank" rel="noopener" class="btn btn-ghost">WhatsApp</a>
+          <a href="https://github.com/koswara198" target="_blank" rel="noopener" class="btn btn-ghost">GitHub</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>Adi Tata Koswara · Built with Astro · 2026</footer>
+</Layout>
